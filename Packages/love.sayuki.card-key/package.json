@@ -1,0 +1,15 @@
+{
+  "name": "love.sayuki.card-key",
+  "displayName": "CardKey System",
+  "version": "3.10.4",
+  "unity": "2022.3",
+  "description": "A CardKey System for VRChat World.",
+  "vpmDependencies": {
+    "com.vrchat.base": "3.10.4"
+  },
+  "author": {
+    "name": "SayukiDev",
+    "email": "none@sayuki.love",
+    "url": "https://github.com/SayukiDev"
+  }
+}

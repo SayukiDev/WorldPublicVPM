@@ -1,0 +1,10 @@
+{
+  "logLevel": "info",
+  "outputPath": "./output/",
+  "repoTemplate": "./repo_template.json",
+  "DownloadRepo": "SayukiDev/PublicVPM",
+  "packagePaths": [
+    "./Packages/love.sayuki.card-key"
+  ],
+  "repoUrls": []
+}

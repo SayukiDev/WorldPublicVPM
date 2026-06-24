@@ -1,0 +1,37 @@
+name: Build and Upload VPM Packages
+
+on:
+  release:
+    types: [released]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download VPMBuilder
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release download \
+            --repo SayukiDev/VPMBuilder \
+            --pattern 'VPMBuilder-linux-amd64' \
+            --output VPMBuilder
+          chmod +x VPMBuilder
+
+      - name: Build packages
+        run: ./VPMBuilder build -t package -c ./config.json
+
+      - name: Upload artifacts to release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload "${{ github.event.release.tag_name }}" \
+            ./output/* \
+            --repo "${{ github.repository }}" \
+            --clobber
