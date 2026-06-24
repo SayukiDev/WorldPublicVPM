@@ -41,32 +41,42 @@ namespace love.sayuki.CardKey.Script.Runtime
                 return;
             }
 
-            foreach (var p in AllowedPlayers)
+            if (IsAllowed(contactInfo.contactSender.player.displayName))
             {
-                if (contactInfo.contactSender.player.displayName != p)
-                {
-                    continue;
-                }
-
                 ToPass();
                 Activate();
                 teleportHandle.TeleportTo(TeleportPoint);
                 return;
             }
 
-            if (URLBody != null)
+            ToWarning();
+        }
+
+        public bool IsAllowed(string playerName)
+        {
+            if (playerName == null)
             {
-                if (URLBody.Contains(contactInfo.contactSender.player.displayName) &&
-                    contactInfo.contactSender.player.displayName != "")
-                {
-                    ToPass();
-                    Activate();
-                    teleportHandle.TeleportTo(TeleportPoint);
-                    return;
-                }
+                return false;
             }
 
-            ToWarning();
+            foreach (var p in AllowedPlayers)
+            {
+                if (playerName != p)
+                {
+                    continue;
+                }
+                return true;
+            }
+
+            if (URLBody != null)
+            {
+                if (URLBody.Contains(playerName) &&
+                    playerName != "")
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private void Activate()
