@@ -2,7 +2,7 @@
   "logLevel": "info",
   "outputPath": "./output/",
   "repoTemplate": "./repo_template.json",
-  "DownloadRepo": "SayukiDev/PublicVPM",
+  "DownloadRepo": "SayukiDev/WorldPublicVPM",
   "packagePaths": [
     "./Packages/love.sayuki.card-key"
   ],
