@@ -1,4 +1,4 @@
-﻿using __Sayuki.CardKey.Script.Utils;
+﻿using love.sayuki.CardKey.Script.Utils;
 using TMPro;
 using UdonSharp;
 using UnityEngine;
@@ -6,7 +6,7 @@ using VRC.Dynamics;
 using VRC.SDK3.Components;
 using VRC.SDKBase;
 
-namespace __Sayuki.CardKey.Script.Runtime
+namespace love.sayuki.CardKey.Script.Runtime
 {
     [UdonBehaviourSyncMode(BehaviourSyncMode.Continuous)]
     public class CardHandle : UdonSharpBehaviour

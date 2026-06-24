@@ -21,7 +21,7 @@ MonoBehaviour:
   compiledVersion: 2
   behaviourSyncMode: 3
   hasInteractEvent: 0
-  scriptID: -8350350208910096681
+  scriptID: 7304923604426884083
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
@@ -224,7 +224,7 @@ MonoBehaviour:
       Data: 12|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: __Sayuki.CardKey.Script.Utils.TeleportHandle, love.sayuki.card-key.Runtime
+      Data: love.sayuki.CardKey.Script.Utils.TeleportHandle, love.sayuki.card-key.Runtime
     - Name: 
       Entry: 8
       Data: 
@@ -284,7 +284,7 @@ MonoBehaviour:
       Data: 16|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: __Sayuki.CardKey.Script.Runtime.ScanDeviceHandle, love.sayuki.card-key.Runtime
+      Data: love.sayuki.CardKey.Script.Runtime.ScanDeviceHandle, love.sayuki.card-key.Runtime
     - Name: 
       Entry: 8
       Data: 

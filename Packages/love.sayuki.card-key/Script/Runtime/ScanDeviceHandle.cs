@@ -1,7 +1,7 @@
 using UdonSharp;
 using UnityEngine;
 
-namespace __Sayuki.CardKey.Script.Runtime
+namespace love.sayuki.CardKey.Script.Runtime
 {
     public class ScanDeviceHandle : UdonSharpBehaviour
     {

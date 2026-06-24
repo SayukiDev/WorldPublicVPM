@@ -3,7 +3,7 @@ using UnityEngine;
 using VRC.SDK3.Components;
 using VRC.SDKBase;
 
-namespace __Sayuki.CardKey.Script.Utils
+namespace love.sayuki.CardKey.Script.Utils
 {
     public class TeleportHandle : UdonSharpBehaviour
     {
