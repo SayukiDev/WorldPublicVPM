@@ -14,6 +14,7 @@ namespace love.sayuki.CardKey.Script.Runtime
         public int CardID;
         public Transform TeleportPoint;
         public bool FollowToPlayer;
+        public GameObject[] toActivate;
         public TextMeshPro CardText;
         public TeleportHandle teleportHandle;
         public ScanDeviceHandle scanDeviceHandle;
@@ -24,6 +25,10 @@ namespace love.sayuki.CardKey.Script.Runtime
         private void Start()
         {
             CardText.text = CardID.ToString();
+            foreach (var t in toActivate)
+            {
+                t.SetActive(false);
+            }
         }
 
         public override void OnPickup()
@@ -66,6 +71,10 @@ namespace love.sayuki.CardKey.Script.Runtime
             if (playerApi.isLocal)
             {
                 scanDeviceHandle.ToPass();
+                foreach (var t in toActivate)
+                {
+                    t.SetActive(true);
+                }
                 teleportHandle.TeleportTo(TeleportPoint);
             }
         }
