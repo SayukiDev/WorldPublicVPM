@@ -37,22 +37,25 @@ namespace love.sayuki.CardKey.Script.Runtime
             if (p == null) return;
             if (p.isLocal)
             {
-                if (Lock&&
+                if (Lock &&
                     OwenerName != "" &&
                     OwenerName != Networking.LocalPlayer.displayName)
                 {
                     gameObject.GetComponent<VRC_Pickup>().Drop();
                     return;
                 }
+
                 if (Lock)
                 {
                     Lock = false;
                     RequestSerialization();
                 }
-                if (OwenerName == ""&&FollowToPlayer)
+
+                if (OwenerName == "" && FollowToPlayer)
                 {
-                    SendCustomEventDelayedSeconds("CheckDistance",5);
+                    SendCustomEventDelayedSeconds("CheckDistance", 5);
                 }
+
                 OwenerName = p.displayName;
                 if (!p.isLocal) return;
                 playerApi = p;
@@ -68,15 +71,17 @@ namespace love.sayuki.CardKey.Script.Runtime
 
         public override void OnContactEnter(ContactEnterInfo contactInfo)
         {
-            if (playerApi.isLocal)
+            if (!playerApi.isLocal)
             {
-                scanDeviceHandle.ToPass();
-                foreach (var t in toActivate)
-                {
-                    t.SetActive(true);
-                }
-                teleportHandle.TeleportTo(TeleportPoint);
+                return;
             }
+
+            scanDeviceHandle.ToPass();
+            foreach (var t in toActivate)
+            {
+                t.SetActive(true);
+            }
+            teleportHandle.TeleportTo(TeleportPoint);
         }
 
         public override void OnPlayerJoined(VRCPlayerApi player)
@@ -89,7 +94,8 @@ namespace love.sayuki.CardKey.Script.Runtime
                 {
                     Lock = true;
                 }
-                RespawnToPlayer(player,true);
+
+                RespawnToPlayer(player, true);
             }
         }
 
@@ -100,6 +106,7 @@ namespace love.sayuki.CardKey.Script.Runtime
             {
                 return;
             }
+
             Lock = true;
             RequestSerialization();
         }
@@ -119,6 +126,7 @@ namespace love.sayuki.CardKey.Script.Runtime
                 direction = playerRot * Vector3.back;
                 spawnRotation = Quaternion.Euler(0, 180, 0);
             }
+
             float distance = 0.5f;
             Vector3 spawnPosition = playerPos + (direction * distance);
             var gs = gameObject.GetComponent<VRCObjectSync>();
@@ -126,6 +134,7 @@ namespace love.sayuki.CardKey.Script.Runtime
             {
                 return;
             }
+
             Networking.SetOwner(Networking.LocalPlayer, gameObject);
             float h = (float)(player.GetAvatarEyeHeightAsMeters() - 0.1);
             if (h < 0) h = 0;
@@ -141,11 +150,13 @@ namespace love.sayuki.CardKey.Script.Runtime
             {
                 return;
             }
+
             if (Vector3.Distance(Networking.LocalPlayer.GetPosition(), gameObject.transform.position) > 3)
             {
                 RespawnToPlayer(Networking.LocalPlayer, false);
             }
-            SendCustomEventDelayedSeconds("CheckDistance",5);
+
+            SendCustomEventDelayedSeconds("CheckDistance", 5);
         }
     }
 }

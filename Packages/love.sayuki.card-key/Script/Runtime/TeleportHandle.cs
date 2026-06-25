@@ -6,6 +6,7 @@ using VRC.SDKBase;
 
 namespace love.sayuki.CardKey.Script.Utils
 {
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class TeleportHandle : UdonSharpBehaviour
     {
         public MeshRenderer FadeCanvas;

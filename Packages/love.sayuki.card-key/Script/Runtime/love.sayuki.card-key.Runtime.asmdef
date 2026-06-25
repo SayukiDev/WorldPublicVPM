@@ -1,21 +1,21 @@
 {
-    "name": "love.sayuki.card-key.Runtime",
-    "rootNamespace": "",
-    "references": [
-        "VRC.SDK3",
-        "VRC.SDKBase",
-        "VRC.Udon",
-        "VRC.Udon.Serialization.OdinSerializer",
-        "UdonSharp.Runtime",
-        "Unity.TextMeshPro"
-    ],
-    "includePlatforms": [],
-    "excludePlatforms": [],
-    "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
-    "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": [],
-    "noEngineReferences": false
+  "name": "love.sayuki.card-key.Runtime",
+  "rootNamespace": "",
+  "references": [
+    "VRC.SDK3",
+    "VRC.SDKBase",
+    "VRC.Udon",
+    "VRC.Udon.Serialization.OdinSerializer",
+    "UdonSharp.Runtime",
+    "Unity.TextMeshPro"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
 }

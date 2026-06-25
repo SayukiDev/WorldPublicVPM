@@ -1,4 +1,5 @@
 ﻿using love.sayuki.CardKey.Script.Utils;
+using UdonSharp;
 using UnityEngine;
 using VRC.Dynamics;
 using VRC.SDK3.StringLoading;
@@ -6,6 +7,7 @@ using VRC.SDKBase;
 
 namespace love.sayuki.CardKey.Script.Runtime
 {
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ScanDeviceStaffHandle : ScanDeviceHandle
     {
         public string[] AllowedPlayers;
@@ -41,6 +43,10 @@ namespace love.sayuki.CardKey.Script.Runtime
                 return;
             }
 
+            if (!contactInfo.contactSender.player.isLocal)
+            {
+                return;
+            }
             if (IsAllowed(contactInfo.contactSender.player.displayName))
             {
                 ToPass();

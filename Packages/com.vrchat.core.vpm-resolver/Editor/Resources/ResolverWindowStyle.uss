@@ -9,7 +9,7 @@
 #package-box {
     margin: 2px;
     border-width: 0;
-    flex-direction:row;
+    flex-direction: row;
     padding: 6px;
     justify-content: center;
     align-items: center;
@@ -19,7 +19,7 @@
     padding: 0;
     margin: 0;
     flex-direction: row;
-    background-color: rgba(0,0,0,0);
+    background-color: rgba(0, 0, 0, 0);
 }
 
 #manifest-header {
