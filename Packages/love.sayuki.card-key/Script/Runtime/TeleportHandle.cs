@@ -1,3 +1,4 @@
+using System;
 using UdonSharp;
 using UnityEngine;
 using VRC.SDK3.Components;
@@ -7,43 +8,57 @@ namespace love.sayuki.CardKey.Script.Utils
 {
     public class TeleportHandle : UdonSharpBehaviour
     {
-        public CanvasGroup FadeCanvas;
+        public MeshRenderer FadeCanvas;
+        public MeshRenderer TargetFadeCanvas;
         private Transform TeleportPoint;
         private bool isTeleporting;
 
         public void TeleportTo(Transform TeleportPoint)
         {
+            gameObject.SetActive(true);
             if (isTeleporting) return;
             isTeleporting = true;
             this.TeleportPoint = TeleportPoint;
             var playerApi = Networking.LocalPlayer;
             playerApi.Immobilize(true);
-            FadeCanvas.alpha = 0;
+            FadeCanvas.material.color = new Color(0, 0, 0, 0);
+            FadeCanvas.gameObject.transform.position=Networking.LocalPlayer.GetPosition()
+                                                     +new Vector3(0,Networking.LocalPlayer.GetAvatarEyeHeightAsMeters(),0);;
             FadeCanvas.gameObject.SetActive(true);
-            VRCTween.TweenFade(FadeCanvas, 1, 2, VRCTweenEase.OutQuad).
+            VRCTween.TweenColor(FadeCanvas, new Color(0, 0, 0, 1), 2, VRCTweenEase.OutQuad).
                 OnComplete(this, nameof(onFadeComplete));
         }
 
         public void onFadeComplete()
         {
+            
             if (TeleportPoint == null)
             {
                 Debug.LogError("TeleportPoint is null");
-                VRCTween.TweenFade(FadeCanvas, 0, 2, VRCTweenEase.OutQuad).
-                    OnComplete(this, nameof(onFadeOutComplete));
-                return;
             }
+            else
+            {
+                TargetFadeCanvas.material.color = new Color(0, 0, 0, 1);
+                TargetFadeCanvas.gameObject.SetActive(true);
+                TargetFadeCanvas.transform.position = TeleportPoint.position+new Vector3(0,Networking.LocalPlayer.GetAvatarEyeHeightAsMeters(),0);
+                var playerApi = Networking.LocalPlayer;
+                playerApi.TeleportTo(TeleportPoint.position, TeleportPoint.rotation);
+                FadeCanvas.gameObject.SetActive(false);
+            }
+            SendCustomEventDelayedFrames(nameof(FadeComplete),1);
+        }
 
-            var playerApi = Networking.LocalPlayer;
-            playerApi.TeleportTo(TeleportPoint.position, TeleportPoint.rotation);
-            VRCTween.TweenFade(FadeCanvas, 0, 2, VRCTweenEase.OutQuad).
+        public void FadeComplete()
+        {
+            VRCTween.TweenColor(TargetFadeCanvas, new Color(0, 0, 0, 0), 2, VRCTweenEase.OutQuad).
                 OnComplete(this, nameof(onFadeOutComplete));
         }
 
         public void onFadeOutComplete()
         {
             var playerApi = Networking.LocalPlayer;
-            FadeCanvas.gameObject.SetActive(false);
+            gameObject.SetActive(false);
+            TargetFadeCanvas.gameObject.SetActive(false);
             playerApi.Immobilize(false);
             TeleportPoint = null;
             isTeleporting = false;
