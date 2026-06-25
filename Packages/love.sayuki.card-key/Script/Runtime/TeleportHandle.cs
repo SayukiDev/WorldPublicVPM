@@ -9,7 +9,6 @@ namespace love.sayuki.CardKey.Script.Utils
     public class TeleportHandle : UdonSharpBehaviour
     {
         public MeshRenderer FadeCanvas;
-        public MeshRenderer TargetFadeCanvas;
         private Transform TeleportPoint;
         private bool isTeleporting;
 
@@ -22,11 +21,16 @@ namespace love.sayuki.CardKey.Script.Utils
             var playerApi = Networking.LocalPlayer;
             playerApi.Immobilize(true);
             FadeCanvas.material.color = new Color(0, 0, 0, 0);
-            FadeCanvas.gameObject.transform.position=Networking.LocalPlayer.GetPosition()
-                                                     +new Vector3(0,Networking.LocalPlayer.GetAvatarEyeHeightAsMeters(),0);;
             FadeCanvas.gameObject.SetActive(true);
             VRCTween.TweenColor(FadeCanvas, new Color(0, 0, 0, 1), 2, VRCTweenEase.OutQuad).
                 OnComplete(this, nameof(onFadeComplete));
+        }
+
+        void Update()
+        {
+            var td = Networking.LocalPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.Head);
+            FadeCanvas.transform.position = td.position;
+            FadeCanvas.transform.rotation = td.rotation;
         }
 
         public void onFadeComplete()
@@ -38,19 +42,18 @@ namespace love.sayuki.CardKey.Script.Utils
             }
             else
             {
-                TargetFadeCanvas.material.color = new Color(0, 0, 0, 1);
+                /*TargetFadeCanvas.material.color = new Color(0, 0, 0, 1);
                 TargetFadeCanvas.gameObject.SetActive(true);
-                TargetFadeCanvas.transform.position = TeleportPoint.position+new Vector3(0,Networking.LocalPlayer.GetAvatarEyeHeightAsMeters(),0);
+                TargetFadeCanvas.transform.position = TeleportPoint.position+new Vector3(0,Networking.LocalPlayer.GetAvatarEyeHeightAsMeters(),0);*/
                 var playerApi = Networking.LocalPlayer;
                 playerApi.TeleportTo(TeleportPoint.position, TeleportPoint.rotation);
-                FadeCanvas.gameObject.SetActive(false);
             }
             SendCustomEventDelayedFrames(nameof(FadeComplete),1);
         }
 
         public void FadeComplete()
         {
-            VRCTween.TweenColor(TargetFadeCanvas, new Color(0, 0, 0, 0), 2, VRCTweenEase.OutQuad).
+            VRCTween.TweenColor(FadeCanvas, new Color(0, 0, 0, 0), 2, VRCTweenEase.OutQuad).
                 OnComplete(this, nameof(onFadeOutComplete));
         }
 
@@ -58,7 +61,8 @@ namespace love.sayuki.CardKey.Script.Utils
         {
             var playerApi = Networking.LocalPlayer;
             gameObject.SetActive(false);
-            TargetFadeCanvas.gameObject.SetActive(false);
+            FadeCanvas.gameObject.SetActive(false);
+            FadeCanvas.material.color = new Color(0, 0, 0, 0);
             playerApi.Immobilize(false);
             TeleportPoint = null;
             isTeleporting = false;
