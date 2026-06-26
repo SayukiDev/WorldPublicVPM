@@ -167,6 +167,11 @@ namespace love.sayuki.CardKey.Script.Runtime
 
             if (Vector3.Distance(Networking.LocalPlayer.GetPosition(), gameObject.transform.position) > 3)
             {
+                if (Networking.LocalPlayer.GetVelocity().magnitude > 0.1f)
+                {
+                    SendCustomEventDelayedSeconds("CheckDistance", 5);
+                    return;
+                }
                 RespawnToPlayer(Networking.LocalPlayer, false);
             }
 
