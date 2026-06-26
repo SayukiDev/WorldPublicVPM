@@ -1,7 +1,9 @@
+using System;
 using love.sayuki.CardKey.Script.Runtime;
 using love.sayuki.CardKey.Script.Utils;
 using UdonSharp;
 using UnityEngine;
+using VRC.SDKBase;
 
 namespace Script.Runtime
 {
@@ -25,7 +27,8 @@ namespace Script.Runtime
             {
                 t.SetActive(true);
             }
-            fromOtherHandle = new GameObject[0];
+
+            fromOtherHandle = Array.Empty<GameObject>();
         }
 
         private void AddListFromOtherHandle()
@@ -78,7 +81,7 @@ namespace Script.Runtime
             {
                 t.SetActive(true);
             }
-            teleportHandle.TeleportTo(teleportPoint);
+            teleportHandle.TeleportTo(Networking.LocalPlayer,teleportPoint);
             foreach (var t in toDeactivate)
             {
                 t.SetActive(false);

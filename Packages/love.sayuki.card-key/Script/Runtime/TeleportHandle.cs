@@ -13,13 +13,12 @@ namespace love.sayuki.CardKey.Script.Utils
         private Transform TeleportPoint;
         private bool isTeleporting;
 
-        public void TeleportTo(Transform TeleportPoint)
+        public void TeleportTo(VRCPlayerApi playerApi,Transform TeleportPoint)
         {
             gameObject.SetActive(true);
             if (isTeleporting) return;
             isTeleporting = true;
             this.TeleportPoint = TeleportPoint;
-            var playerApi = Networking.LocalPlayer;
             playerApi.Immobilize(true);
             FadeCanvas.material.color = new Color(0, 0, 0, 0);
             FadeCanvas.gameObject.SetActive(true);

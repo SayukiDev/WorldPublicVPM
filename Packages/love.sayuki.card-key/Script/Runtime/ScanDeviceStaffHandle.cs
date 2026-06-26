@@ -61,7 +61,7 @@ namespace love.sayuki.CardKey.Script.Runtime
                 {
                     a.SetActive(true);
                 }
-                teleportHandle.TeleportTo(TeleportPoint);
+                teleportHandle.TeleportTo(contactInfo.contactSender.player, TeleportPoint);
                 foreach (var t in toDeactivate)
                 {
                     t.SetActive(false);
