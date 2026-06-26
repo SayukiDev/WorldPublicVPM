@@ -5,7 +5,7 @@ using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 
-namespace Script.Runtime
+namespace love.sayuki.CardKey.Script.Runtime
 {
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ColliderTeleport: UdonSharpBehaviour
