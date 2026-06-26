@@ -28,7 +28,7 @@ namespace Script.Runtime
                 t.SetActive(true);
             }
 
-            fromOtherHandle = Array.Empty<GameObject>();
+            fromOtherHandle = new GameObject[0];
         }
 
         private void AddListFromOtherHandle()
