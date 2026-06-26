@@ -34,6 +34,7 @@ namespace love.sayuki.CardKey.Script.Runtime
             {
                 t.SetActive(true);
             }
+            gameObject.transform.SetParent(null,true);
         }
 
         public override void OnPickup()
