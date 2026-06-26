@@ -15,6 +15,7 @@ namespace love.sayuki.CardKey.Script.Runtime
         public Transform TeleportPoint;
         public bool FollowToPlayer;
         public GameObject[] toActivate;
+        public GameObject[] toDeactivate;
         public TextMeshPro CardText;
         public TeleportHandle teleportHandle;
         public ScanDeviceHandle scanDeviceHandle;
@@ -28,6 +29,10 @@ namespace love.sayuki.CardKey.Script.Runtime
             foreach (var t in toActivate)
             {
                 t.SetActive(false);
+            }
+            foreach (var t in toDeactivate)
+            {
+                t.SetActive(true);
             }
         }
 
@@ -81,7 +86,16 @@ namespace love.sayuki.CardKey.Script.Runtime
             {
                 t.SetActive(true);
             }
+
+            foreach (var a in toActivate)
+            {
+                a.SetActive(true);
+            }
             teleportHandle.TeleportTo(TeleportPoint);
+            foreach (var t in toDeactivate)
+            {
+                t.SetActive(false);
+            }
         }
 
         public override void OnPlayerJoined(VRCPlayerApi player)

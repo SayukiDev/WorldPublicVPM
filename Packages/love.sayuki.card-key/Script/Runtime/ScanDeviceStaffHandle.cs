@@ -15,6 +15,7 @@ namespace love.sayuki.CardKey.Script.Runtime
         private string URLBody;
         public Transform TeleportPoint;
         public GameObject[] toActivate;
+        public GameObject[] toDeactivate;
         public TeleportHandle teleportHandle;
 
         public void Start()
@@ -51,7 +52,20 @@ namespace love.sayuki.CardKey.Script.Runtime
             {
                 ToPass();
                 Activate();
+                foreach (var t in toActivate)
+                {
+                    t.SetActive(true);
+                }
+
+                foreach (var a in toActivate)
+                {
+                    a.SetActive(true);
+                }
                 teleportHandle.TeleportTo(TeleportPoint);
+                foreach (var t in toDeactivate)
+                {
+                    t.SetActive(false);
+                }
                 return;
             }
 
