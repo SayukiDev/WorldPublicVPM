@@ -93,6 +93,11 @@ namespace love.sayuki.CardKey.Script.Runtime
                 a.SetActive(true);
             }
             teleportHandle.TeleportTo(playerApi,TeleportPoint);
+            SendCustomEventDelayedSeconds("ToDeactivate", 10);
+        }
+
+        public void ToDeactivate()
+        {
             foreach (var t in toDeactivate)
             {
                 t.SetActive(false);
