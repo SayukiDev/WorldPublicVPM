@@ -15,8 +15,8 @@ namespace love.sayuki.CardKey.Script.Utils
 
         public void TeleportTo(VRCPlayerApi playerApi,Transform TeleportPoint)
         {
-            gameObject.SetActive(true);
             if (isTeleporting) return;
+            gameObject.SetActive(true);
             isTeleporting = true;
             this.TeleportPoint = TeleportPoint;
             playerApi.Immobilize(true);
