@@ -51,21 +51,9 @@ namespace love.sayuki.CardKey.Script.Runtime
             if (IsAllowed(contactInfo.contactSender.player.displayName))
             {
                 ToPass();
-                Activate();
-                foreach (var t in toActivate)
-                {
-                    t.SetActive(true);
-                }
-
-                foreach (var a in toActivate)
-                {
-                    a.SetActive(true);
-                }
+                ToActivate();
                 teleportHandle.TeleportTo(contactInfo.contactSender.player, TeleportPoint);
-                foreach (var t in toDeactivate)
-                {
-                    t.SetActive(false);
-                }
+                SendCustomEventDelayedSeconds("ToDeactivate", 10);
                 return;
             }
 
@@ -99,11 +87,19 @@ namespace love.sayuki.CardKey.Script.Runtime
             return false;
         }
 
-        private void Activate()
+        public void ToActivate()
         {
             foreach (var t in toActivate)
             {
                 t.SetActive(true);
+            }
+        }
+
+        public void ToDeactivate()
+        {
+            foreach (var t in toDeactivate)
+            {
+                t.SetActive(false);
             }
         }
     }

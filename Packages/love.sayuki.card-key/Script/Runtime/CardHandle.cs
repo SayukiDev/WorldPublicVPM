@@ -83,17 +83,18 @@ namespace love.sayuki.CardKey.Script.Runtime
             }
 
             scanDeviceHandle.ToPass();
+
+            ToActivate();
+            teleportHandle.TeleportTo(playerApi,TeleportPoint);
+            SendCustomEventDelayedSeconds("ToDeactivate", 10);
+        }
+
+        public void ToActivate()
+        {
             foreach (var t in toActivate)
             {
                 t.SetActive(true);
             }
-
-            foreach (var a in toActivate)
-            {
-                a.SetActive(true);
-            }
-            teleportHandle.TeleportTo(playerApi,TeleportPoint);
-            SendCustomEventDelayedSeconds("ToDeactivate", 10);
         }
 
         public void ToDeactivate()

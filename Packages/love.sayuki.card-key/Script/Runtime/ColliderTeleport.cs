@@ -68,6 +68,8 @@ namespace love.sayuki.CardKey.Script.Runtime
 
         public GameObject[] AddToList(GameObject[] baseL,GameObject[] toAdd)
         {
+            if (toAdd == null) return baseL;
+            if (toAdd.Length == 0) return baseL;
             var lenght = baseL.Length + toAdd.Length;
             var tempA=new GameObject[baseL.Length+lenght];
             baseL.CopyTo(tempA,0);
@@ -77,14 +79,18 @@ namespace love.sayuki.CardKey.Script.Runtime
         
         public override void Interact()
         {
+            ToActivate();
+            teleportHandle.TeleportTo(Networking.LocalPlayer,teleportPoint);
+            SendCustomEventDelayedSeconds("ToDeactivate", 10);
+        }
+        public void ToActivate()
+        {
             foreach (var t in toActivate)
             {
                 t.SetActive(true);
             }
-            teleportHandle.TeleportTo(Networking.LocalPlayer,teleportPoint);
-            SendCustomEventDelayedSeconds("ToDeactivate", 10);
         }
-        
+
         public void ToDeactivate()
         {
             foreach (var t in toDeactivate)
