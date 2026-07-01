@@ -77,13 +77,12 @@ namespace love.sayuki.CardKey.Script.Runtime
 
         public override void OnContactEnter(ContactEnterInfo contactInfo)
         {
-            if (!playerApi.isLocal)
+            if (playerApi == null) return;
+            if (!playerApi.isLocal||playerApi.displayName!=OwenerName)
             {
                 return;
             }
-
             scanDeviceHandle.ToPass();
-
             ToActivate();
             teleportHandle.TeleportTo(playerApi,TeleportPoint);
             SendCustomEventDelayedSeconds("ToDeactivate", 10);

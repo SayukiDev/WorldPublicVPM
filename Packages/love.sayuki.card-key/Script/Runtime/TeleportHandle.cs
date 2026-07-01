@@ -12,6 +12,7 @@ namespace love.sayuki.CardKey.Script.Utils
         public MeshRenderer FadeCanvas;
         private Transform TeleportPoint;
         private bool isTeleporting;
+        private VRCPlayerApi playerApi;
 
         public void TeleportTo(VRCPlayerApi playerApi,Transform TeleportPoint)
         {
@@ -20,6 +21,7 @@ namespace love.sayuki.CardKey.Script.Utils
             isTeleporting = true;
             this.TeleportPoint = TeleportPoint;
             playerApi.Immobilize(true);
+            this.playerApi = playerApi;
             FadeCanvas.material.color = new Color(0, 0, 0, 0);
             FadeCanvas.gameObject.SetActive(true);
             VRCTween.TweenColor(FadeCanvas, new Color(0, 0, 0, 1), 2, VRCTweenEase.OutQuad).
@@ -45,7 +47,6 @@ namespace love.sayuki.CardKey.Script.Utils
                 /*TargetFadeCanvas.material.color = new Color(0, 0, 0, 1);
                 TargetFadeCanvas.gameObject.SetActive(true);
                 TargetFadeCanvas.transform.position = TeleportPoint.position+new Vector3(0,Networking.LocalPlayer.GetAvatarEyeHeightAsMeters(),0);*/
-                var playerApi = Networking.LocalPlayer;
                 playerApi.TeleportTo(TeleportPoint.position, TeleportPoint.rotation);
             }
             SendCustomEventDelayedFrames(nameof(FadeComplete),1);
