@@ -52,10 +52,7 @@ namespace love.sayuki.CardKey.Script.Runtime
             {
                 if (Lock)
                 {
-                    if (
-                        OwenerName != "" &&
-                        OwenerName != Networking.LocalPlayer.displayName
-                        )
+                    if (OwenerName != Networking.LocalPlayer.displayName)
                     {
                         if (scanDeviceStaffHandle == null)
                         {
