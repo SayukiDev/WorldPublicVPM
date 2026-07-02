@@ -57,7 +57,7 @@ namespace love.sayuki.CardKey.Script.Runtime
                     RequestSerialization();
                 }
 
-                if (!distanceChecking)
+                if (!distanceChecking&&FollowToPlayer)
                 {
                     distanceChecking = true;
                     SendCustomEventDelayedSeconds("CheckDistance", 5);
