@@ -2,6 +2,7 @@
 using TMPro;
 using UdonSharp;
 using UnityEngine;
+using UnityEngine.Serialization;
 using VRC.Dynamics;
 using VRC.SDK3.Components;
 using VRC.SDKBase;
@@ -19,6 +20,8 @@ namespace love.sayuki.CardKey.Script.Runtime
         public TextMeshPro CardText;
         public TeleportHandle teleportHandle;
         public ScanDeviceHandle scanDeviceHandle;
+        public ScanDeviceStaffHandle scanDeviceStaffHandle;
+        [FormerlySerializedAs("LockedForFirst")] public bool lockedForFirst;
         private bool distanceChecking;
         [UdonSynced] private bool Lock;
         [UdonSynced] private string OwenerName;
@@ -35,6 +38,10 @@ namespace love.sayuki.CardKey.Script.Runtime
                 t.SetActive(true);
             }
             gameObject.transform.SetParent(null,true);
+            if (lockedForFirst)
+            {
+                Lock = true;
+            }
         }
 
         public override void OnPickup()
@@ -43,16 +50,24 @@ namespace love.sayuki.CardKey.Script.Runtime
             if (p == null) return;
             if (p.isLocal)
             {
-                if (Lock &&
-                    OwenerName != "" &&
-                    OwenerName != Networking.LocalPlayer.displayName)
-                {
-                    gameObject.GetComponent<VRC_Pickup>().Drop();
-                    return;
-                }
-
                 if (Lock)
                 {
+                    if (
+                        OwenerName != "" &&
+                        OwenerName != Networking.LocalPlayer.displayName
+                        )
+                    {
+                        if (scanDeviceStaffHandle == null)
+                        {
+                            gameObject.GetComponent<VRC_Pickup>().Drop();
+                            return;
+                        }
+                        if (!scanDeviceStaffHandle.IsAllowed(Networking.LocalPlayer.displayName))
+                        {
+                            gameObject.GetComponent<VRC_Pickup>().Drop();
+                            return;
+                        }
+                    }
                     Lock = false;
                     RequestSerialization();
                 }
@@ -125,9 +140,15 @@ namespace love.sayuki.CardKey.Script.Runtime
             {
                 return;
             }
-
             Lock = true;
             RequestSerialization();
+            Networking.SetOwner(Networking.LocalPlayer, gameObject);
+            var gs = gameObject.GetComponent<VRCObjectSync>();
+            if (gs == null)
+            {
+                return;
+            }
+            gs.Respawn();
         }
 
         private void RespawnToPlayer(VRCPlayerApi player, bool forward = false)
