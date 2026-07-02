@@ -19,7 +19,7 @@ namespace love.sayuki.CardKey.Script.Runtime
         public TextMeshPro CardText;
         public TeleportHandle teleportHandle;
         public ScanDeviceHandle scanDeviceHandle;
-        private VRCPlayerApi playerApi;
+        private bool distanceChecking;
         [UdonSynced] private bool Lock;
         [UdonSynced] private string OwenerName;
 
@@ -57,34 +57,33 @@ namespace love.sayuki.CardKey.Script.Runtime
                     RequestSerialization();
                 }
 
-                if (OwenerName == "" && FollowToPlayer)
+                if (!distanceChecking)
                 {
+                    distanceChecking = true;
                     SendCustomEventDelayedSeconds("CheckDistance", 5);
                 }
-
                 OwenerName = p.displayName;
+                RequestSerialization();
                 if (!p.isLocal) return;
-                playerApi = p;
                 p.SetPlayerTag(Utils.UserTag, CardID.ToString());
             }
         }
 
         public override void OnDrop()
         {
-            if (playerApi == null) return;
-            playerApi.SetPlayerTag(Utils.UserTag, "");
+            if (Networking.LocalPlayer.displayName!=OwenerName) return;
+            Networking.LocalPlayer.SetPlayerTag(Utils.UserTag, "");
         }
 
         public override void OnContactEnter(ContactEnterInfo contactInfo)
         {
-            if (playerApi == null) return;
-            if (!playerApi.isLocal||playerApi.displayName!=OwenerName)
+            if (Networking.LocalPlayer.displayName!=OwenerName)
             {
                 return;
             }
             scanDeviceHandle.ToPass();
             ToActivate();
-            teleportHandle.TeleportTo(playerApi,TeleportPoint);
+            teleportHandle.TeleportTo(Networking.LocalPlayer,TeleportPoint);
             SendCustomEventDelayedSeconds("ToDeactivate", 10);
         }
 
@@ -168,6 +167,7 @@ namespace love.sayuki.CardKey.Script.Runtime
         {
             if (Networking.LocalPlayer.displayName != OwenerName)
             {
+                distanceChecking = false;
                 return;
             }
 
