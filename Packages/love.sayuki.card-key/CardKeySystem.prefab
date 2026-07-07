@@ -179,10 +179,10 @@ MonoBehaviour:
   passSound: {fileID: 8300000, guid: a25acc748421d964ab4449d32e224608, type: 3}
   warnSound: {fileID: 8300000, guid: 5cac065be78cd5e418926cb1003e7a58, type: 3}
   AllowedPlayers: []
-  AllowedPlayersUrls:
-  - url: https://gist.githubusercontent.com/SayukiDev/a7f553d8fee393df7d7562bd5ddfff96/raw/f383838b67b153a4cb72c2dea5be91fe1c8ff2c7/gistfile1.txt
+  AllowedPlayersUrls: []
   TeleportPoint: {fileID: 0}
   toActivate: []
+  toDeactivate: []
   teleportHandle: {fileID: 2623535719478911824}
 --- !u!114 &3170452780300906923
 MonoBehaviour:
@@ -1171,9 +1171,12 @@ MonoBehaviour:
   TeleportPoint: {fileID: 0}
   FollowToPlayer: 1
   toActivate: []
+  toDeactivate: []
   CardText: {fileID: 160883681336394031}
   teleportHandle: {fileID: 2623535719478911824}
   scanDeviceHandle: {fileID: 8905077279345692214}
+  scanDeviceStaffHandle: {fileID: 7426241259617955208}
+  lockedForFirst: 0
 --- !u!114 &5196689109840779531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1650,9 +1653,12 @@ MonoBehaviour:
   TeleportPoint: {fileID: 0}
   FollowToPlayer: 1
   toActivate: []
+  toDeactivate: []
   CardText: {fileID: 5774755810930971182}
   teleportHandle: {fileID: 2623535719478911824}
   scanDeviceHandle: {fileID: 8905077279345692214}
+  scanDeviceStaffHandle: {fileID: 7426241259617955208}
+  lockedForFirst: 0
 --- !u!114 &2478000973685001903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2055,6 +2061,11 @@ MonoBehaviour:
   _udonSharpBackingUdonBehaviour: {fileID: 266338102553383434}
   teleportPoint: {fileID: 0}
   teleportHandle: {fileID: 2623535719478911824}
+  toActivate: []
+  toDeactivate: []
+  fromOtherHandle:
+  - {fileID: 3763464526969313854}
+  revertFromOtherHandle: 1
 --- !u!114 &266338102553383434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2460,7 +2471,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: ee9ea953f3c546d4e88fde734bfcf505,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -7.21
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ee9ea953f3c546d4e88fde734bfcf505,
         type: 3}

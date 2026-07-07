@@ -124,9 +124,10 @@ namespace love.sayuki.CardKey.Script.Runtime
                 if (!Lock)
                 {
                     Lock = true;
+                    RequestSerialization();
                 }
-
                 RespawnToPlayer(player, true);
+                SendCustomEventDelayedSeconds("CheckDistance", 5);
             }
         }
 
@@ -161,7 +162,7 @@ namespace love.sayuki.CardKey.Script.Runtime
             else
             {
                 direction = playerRot * Vector3.back;
-                spawnRotation = Quaternion.Euler(0, 180, 0);
+                spawnRotation = playerRot * Quaternion.Euler(0, 180, 0);
             }
 
             float distance = 0.5f;
@@ -175,7 +176,7 @@ namespace love.sayuki.CardKey.Script.Runtime
             Networking.SetOwner(Networking.LocalPlayer, gameObject);
             float h = (float)(player.GetAvatarEyeHeightAsMeters() - 0.1);
             if (h < 0) h = 0;
-            spawnPosition.y = h;
+            spawnPosition.y = playerPos.y + h;
             gameObject.transform.position = spawnPosition;
             gameObject.transform.rotation = spawnRotation;
             gs.TeleportTo(gameObject.transform);
