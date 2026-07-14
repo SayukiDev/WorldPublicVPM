@@ -17,7 +17,6 @@ namespace love.sayuki.CardKey.Script.Runtime
         public bool FollowToPlayer;
         public GameObject[] toActivate;
         public GameObject[] toDeactivate;
-        public TextMeshPro CardText;
         public TeleportHandle teleportHandle;
         public ScanDeviceHandle scanDeviceHandle;
         public ScanDeviceStaffHandle scanDeviceStaffHandle;
@@ -28,7 +27,11 @@ namespace love.sayuki.CardKey.Script.Runtime
 
         private void Start()
         {
-            CardText.text = CardID.ToString();
+            var mr=gameObject.GetComponent<MeshRenderer>();
+            if (mr != null)
+            {
+                mr.material.SetInt("_Number", CardID);
+            }
             foreach (var t in toActivate)
             {
                 t.SetActive(false);
