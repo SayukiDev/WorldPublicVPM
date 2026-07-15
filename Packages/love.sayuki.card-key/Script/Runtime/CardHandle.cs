@@ -114,8 +114,11 @@ namespace love.sayuki.CardKey.Script.Runtime
             ToActivate();
             teleportHandle.TeleportTo(Networking.LocalPlayer,TeleportPoint);
             SendCustomEventDelayedSeconds("ToDeactivate", 10);
-            gameObject.GetComponent<VRC_Pickup>().Drop();
-            Reset();
+            if (ResetWhenUsed)
+            {
+                gameObject.GetComponent<VRC_Pickup>().Drop();
+                Reset();
+            }
         }
 
         public void ToActivate()

@@ -78,7 +78,7 @@ namespace love.sayuki.CardKey.Script.Runtime
 
             if (URLBody != null)
             {
-                if (URLBody.Contains(playerName) &&
+                if (URLBody.Contains(playerName+"\n") &&
                     playerName != "")
                 {
                     return true;
