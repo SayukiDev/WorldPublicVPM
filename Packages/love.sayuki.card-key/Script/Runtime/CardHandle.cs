@@ -1,4 +1,5 @@
-﻿using love.sayuki.CardKey.Script.Utils;
+﻿using System;
+using love.sayuki.CardKey.Script.Utils;
 using TMPro;
 using UdonSharp;
 using UnityEngine;
@@ -15,6 +16,7 @@ namespace love.sayuki.CardKey.Script.Runtime
         public int CardID;
         public Transform TeleportPoint;
         public bool FollowToPlayer;
+        public bool ResetWhenUsed;
         public GameObject[] toActivate;
         public GameObject[] toDeactivate;
         public TeleportHandle teleportHandle;
@@ -45,6 +47,18 @@ namespace love.sayuki.CardKey.Script.Runtime
             {
                 Lock = true;
             }
+        }
+
+        public void Reset()
+        {
+            Lock= lockedForFirst;
+            OwenerName = "";
+            var vos = gameObject.GetComponent<VRCObjectSync>();
+            if (vos != null)
+            {
+                vos.Respawn();
+            }
+            RequestSerialization();
         }
 
         public override void OnPickup()
@@ -100,6 +114,8 @@ namespace love.sayuki.CardKey.Script.Runtime
             ToActivate();
             teleportHandle.TeleportTo(Networking.LocalPlayer,TeleportPoint);
             SendCustomEventDelayedSeconds("ToDeactivate", 10);
+            gameObject.GetComponent<VRC_Pickup>().Drop();
+            Reset();
         }
 
         public void ToActivate()
