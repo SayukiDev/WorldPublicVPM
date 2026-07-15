@@ -23,10 +23,6 @@ namespace love.sayuki.CardKey.Script.Runtime
             {
                 t.SetActive(false);
             }
-            foreach (var t in toDeactivate)
-            {
-                t.SetActive(true);
-            }
 
             fromOtherHandle = new GameObject[0];
         }
